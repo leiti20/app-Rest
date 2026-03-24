@@ -1,0 +1,8 @@
+login = spring mdp = apprest
+login = mouholei-git mdp=apprest
+
+
+Ton interface réseau (<ensXX>) est ens33.
+L'adresse IP de ta VM (<@IP_VM_XML>) est bien 10.130.162.184.
+La passerelle (<@IP_GATEWAY>) est 10.130.162.1 (indiquée sur la ligne default via de la commande ip route)
+Le fichier de configuration (<netplan.yaml>) s'appelle 50-cloud-init.yaml
