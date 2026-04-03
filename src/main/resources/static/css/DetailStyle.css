@@ -1,0 +1,96 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+    background-color: #f4f7f6; 
+    color: #333; 
+    padding: 40px 20px;
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+h1 { 
+    color: #212529; 
+    font-size: 32px; 
+    margin-bottom: 30px; 
+    margin-top: 20px;
+}
+
+.card { 
+    background: #ffffff; 
+    border-radius: 10px; 
+    padding: 30px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 
+}
+
+.field { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #e9ecef; 
+}
+
+.field:first-child {
+    padding-top: 0;
+}
+
+.field:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.label { 
+    color: #6c757d; 
+    font-size: 14px; 
+    font-weight: 600;
+}
+
+.value { 
+    color: #212529; 
+    font-size: 15px; 
+    font-weight: 500;
+    text-align: right;
+    word-break: break-all; 
+    max-width: 65%; 
+}
+
+.amount { 
+    color: #228be6; 
+    font-size: 20px; 
+    font-weight: 700; 
+    background: #e7f5ff; 
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.back { 
+    display: inline-block; 
+    color: #495057; 
+    text-decoration: none; 
+    font-weight: 600;
+    font-size: 15px;
+    transition: color 0.2s ease;
+    margin-bottom: 10px;
+}
+
+.back:hover { 
+    color: #212529; 
+    text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+    .field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .value, .amount {
+        text-align: left;
+        margin-top: 6px;
+        max-width: 100%;
+    }
+}

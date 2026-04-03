@@ -1,0 +1,60 @@
+info:
+  name: instert
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8100/sepa26/insert?Content-Type =application/xml
+  params:
+    - name: "Content-Type "
+      value: application/xml
+      type: query
+  body:
+    type: xml
+    data: |-
+      <?xml version="1.0" encoding="UTF-8"?>
+      <Document xmlns="http://univ.fr/sepa">
+          <CstmrDrctDbtInitn>
+              <GrpHdr>
+                  <MsgId>MSGID-001</MsgId>
+                  <CreDtTm>2026-03-30T10:00:00</CreDtTm>
+                  <NbOfTxs>1</NbOfTxs>
+                  <CtrlSum>1100.07</CtrlSum>
+                  <InitgPty><Nm>Societe XX</Nm></InitgPty>
+              </GrpHdr>
+              <PmtInf>
+                  <PmtInfId>REF Remise 001</PmtInfId>
+                  <PmtTpInf>
+                      <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                      <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                      <SeqTp>OOFF</SeqTp>
+                  </PmtTpInf>
+                  <ReqdColltnDt>2026-04-01</ReqdColltnDt>
+                  <Cdtr><Nm>Societe XX</Nm></Cdtr>
+                  <CdtrAcct><Id><IBAN>FR7612345678901234567890123</IBAN></Id></CdtrAcct>
+                  <CdtrAgt><FinInstnId><BIC>ABCDEFGHXXX</BIC></FinInstnId></CdtrAgt>
+                  <DrctDbtTxInf>
+                      <PmtId>REF_OPE_001</PmtId>
+                      <InstdAmt Ccy="EUR">1100.07</InstdAmt>
+                      <DrctDbtTx>
+                          <MndtRltdInf>
+                              <MndtId>MANDAT-001</MndtId>
+                              <DtOfSgntr>2026-01-10</DtOfSgntr>
+                          </MndtRltdInf>
+                      </DrctDbtTx>
+                      <DbtrAgt><FinInstnId><BIC>XYZABCDEXXX</BIC></FinInstnId></DbtrAgt>
+                      <Dbtr><Nm>Mr Debiteur N1</Nm></Dbtr>
+                      <DbtrAcct><Id><IBAN>FR7698765432109876543210987</IBAN></Id></DbtrAcct>
+                      <RmtInf>Facture 001</RmtInf>
+                  </DrctDbtTxInf>
+              </PmtInf>
+          </CstmrDrctDbtInitn>
+      </Document>
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

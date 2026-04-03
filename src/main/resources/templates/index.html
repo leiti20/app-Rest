@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Service REST</title>
+	<link rel="stylesheet" th:href="@{/css/IndexStyle.css}">
+</head>
+<body>
+    <div class="container">
+        <img class="logo" th:src="@{/images/logo.png}"  alt="Logo Université de Rouen"/>
+        <h1>SEPA26 Service REST</h1>
+        <div class="version">Version <span th:text="${version}"></span> — <span th:text="${year}"></span></div>
+        <div class="developer">Développeur : <span th:text="${developer}"></span> — M1 GIL</div>
+        <div class="buttons">
+            <a href="/help" class="btn btn-help"> Aide</a>
+            <a href="/sepa/resume/html" class="btn btn-api"> Transactions</a>
+        </div>
+    </div>
+</body>
+</html>

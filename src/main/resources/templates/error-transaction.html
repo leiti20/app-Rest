@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Erreur</title>
+	<link rel="stylesheet" th:href="@{/css/Error-transactionStyle.css}">
+</head>
+<body>
+    <div>
+        <h1>ERROR</h1>
+        <p>Transaction <strong th:text="${id}"></strong> introuvable.</p>
+        <p><a href="/sepa/resume/html">← Retour à la liste</a></p>
+    </div>
+</body>
+</html>

@@ -4,8 +4,16 @@ info:
   seq: 1
 
 http:
-  method: POST
-  url: http://localhost:8100/testpost
+  method: GET
+  url: http://localhost:8100/urlquiexistepas
+  headers:
+    - name: Accept
+      value: application/xml
+    - name: Content-Type
+      value: application/xml
+  body:
+    type: xml
+    data: <test/>
   auth: inherit
 
 settings:

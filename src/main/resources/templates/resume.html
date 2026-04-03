@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Transactions</title>
+	<link rel="stylesheet" th:href="@{/css/ResumeStyle.css}">
+</head>
+<body>
+    <a class="back" href="/">← Accueil</a>
+    <h1> Liste des transactions SEPA</h1>
+    <p class="subtitle">10 dernières transactions enregistrées</p>
+
+    <table th:if="${!transactions.isEmpty()}">
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Référence</th>
+            <th>Montant</th>
+        </tr>
+        <tr th:each="t : ${transactions}">
+            <td><a th:href="@{'/sepa26/html/' + ${t.id}}" th:text="${t.id}"></a></td>
+            <td th:text="${t.createdAt}"></td>
+            <td th:text="${t.pmtId}"></td>
+            <td th:text="${t.amount} + ' ' + ${t.currency}"></td>
+        </tr>
+    </table>
+    <p class="empty" th:if="${transactions.isEmpty()}">Aucune transaction enregistrée.</p>
+</body>
+</html>

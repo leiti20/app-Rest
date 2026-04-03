@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Aide</title>
+	<link rel="stylesheet" th:href="@{/css/HelpStyle.css}">
+</head>
+<body>
+    <a class="back" href="/">← Accueil</a>
+    <h1> Documentation API SEPA26</h1>
+    <p class="subtitle">Liste de toutes les opérations disponibles sur le service REST</p>
+    <table>
+        <tr>
+            <th>URL</th>
+            <th>Méthode</th>
+            <th>Description</th>
+            <th>Retour</th>
+        </tr>
+        <tr>
+            <td class="url">/</td>
+            <td><span class="method-get">GET</span></td>
+            <td>Page d'accueil du service</td>
+            <td>HTML</td>
+        </tr>
+        <tr>
+            <td class="url">/help</td>
+            <td><span class="method-get">GET</span></td>
+            <td>Documentation de l'API</td>
+            <td>HTML</td>
+        </tr>
+        <tr>
+            <td class="url">/sepa26/resume/xml</td>
+            <td><span class="method-get">GET</span></td>
+            <td>Liste des 10 dernières transactions</td>
+            <td>XML</td>
+        </tr>
+        <tr>
+            <td class="url">/sepa/resume/html</td>
+            <td><span class="method-get">GET</span></td>
+            <td>Liste des 10 dernières transactions</td>
+            <td>HTML</td>
+        </tr>
+        <tr>
+            <td class="url">/sepa26/xml/{id}</td>
+            <td><span class="method-get">GET</span></td>
+            <td>Détail d'une transaction par ID</td>
+            <td>XML</td>
+        </tr>
+        <tr>
+            <td class="url">/sepa26/html/{id}</td>
+            <td><span class="method-get">GET</span></td>
+            <td>Détail d'une transaction par ID</td>
+            <td>HTML</td>
+        </tr>
+        <tr>
+            <td class="url">/sepa26/insert</td>
+            <td><span class="method-post">POST</span></td>
+            <td>Insertion d'une transaction SEPA validée XSD</td>
+            <td>XML</td>
+        </tr>
+        <tr>
+            <td class="url">/sepa26/delete/{id}</td>
+            <td><span class="method-delete">DELETE</span></td>
+            <td>Suppression d'une transaction par ID</td>
+            <td>XML</td>
+        </tr>
+        <tr>
+            <td class="url">/sepa26/search?date=...&amp;sum=...</td>
+            <td><span class="method-get">GET</span></td>
+            <td>Recherche par date et/ou montant</td>
+            <td>XML</td>
+        </tr>
+    </table>
+</body>
+</html>

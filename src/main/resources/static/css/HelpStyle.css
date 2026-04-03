@@ -1,0 +1,96 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+    background-color: #f4f7f6; 
+    color: #333; 
+    padding: 40px 20px;
+    max-width: 1000px; 
+    margin: 0 auto; 
+}
+
+h1 { 
+    color: #212529; 
+    font-size: 32px; 
+    margin-bottom: 8px; 
+    margin-top: 20px;
+}
+
+.subtitle { 
+    color: #6c757d; 
+    font-size: 16px; 
+    margin-bottom: 35px; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    background: #ffffff; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 
+    margin-bottom: 40px; 
+}
+
+th { 
+    background: #212529;
+	color: #ffffff; 
+    padding: 16px 20px; 
+    text-align: left; 
+    font-weight: 600; 
+    font-size: 15px;
+}
+
+td { 
+    padding: 16px 20px; 
+    border-bottom: 1px solid #e9ecef; 
+    vertical-align: middle; 
+    color: #495057; 
+}
+
+tr:last-child td {
+    border-bottom: none; 
+}
+
+tr:hover td { 
+    background: #f8f9fa; 
+}
+
+.method-get, .method-post, .method-delete {
+    display: inline-block;
+    padding: 6px 12px; 
+    border-radius: 20px; 
+    font-size: 12px; 
+    font-weight: 700; 
+    letter-spacing: 0.5px;
+    text-align: center;
+    min-width: 70px;
+}
+
+.method-get { 
+    background: #e6f4ea; 
+    color: #1e8e3e; 
+}
+
+.method-post { 
+    background: #fef7e0; 
+    color: #b06000; 
+}
+
+.method-delete { 
+    background: #fce8e6; 
+    color: #d93025; 
+}
+
+.url { 
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace; 
+    color: #228be6; 
+    font-size: 14px; 
+    background: #f1f3f5; 
+    padding: 4px 8px; 
+    border-radius: 4px; 
+}

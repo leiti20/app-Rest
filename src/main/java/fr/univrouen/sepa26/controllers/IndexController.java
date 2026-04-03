@@ -1,12 +1,17 @@
 package fr.univrouen.sepa26.controllers;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class IndexController {
-	@GetMapping("/")
-	public String index() {
-		return "Hello sepa26 !";
-	}
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("version", "1.0.0");
+        model.addAttribute("developer", "Leiticia Mouhoubi");
+        model.addAttribute("year", "2026");
+        return "index";
+    }
 }

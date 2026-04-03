@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Détail transaction</title>
+	<link rel="stylesheet" th:href="@{/css/DetailStyle.css}">
+</head>
+<body>
+    <a class="back" href="/sepa/resume/html">← Liste des transactions</a>
+    <h1>Détail de la transaction</h1>
+    <div class="card">
+        <div class="field">
+            <div class="label">ID</div>
+            <div class="value" th:text="${transaction.id}"></div>
+        </div>
+        <div class="field">
+            <div class="label">Référence</div>
+            <div class="value" th:text="${transaction.pmtId}"></div>
+        </div>
+        <div class="field">
+            <div class="label">Date</div>
+            <div class="value" th:text="${transaction.createdAt}"></div>
+        </div>
+        <div class="field">
+            <div class="label">Montant</div>
+            <div class="amount" th:text="${transaction.amount} + ' ' + ${transaction.currency}"></div>
+        </div>
+        <div class="field">
+            <div class="label">Débiteur</div>
+            <div class="value" th:text="${transaction.debtorName}"></div>
+        </div>
+        <div class="field">
+            <div class="label">IBAN Débiteur</div>
+            <div class="value" th:text="${transaction.debtorIban}"></div>
+        </div>
+        <div class="field">
+            <div class="label">Créancier</div>
+            <div class="value" th:text="${transaction.creditorName}"></div>
+        </div>
+        <div class="field">
+            <div class="label">IBAN Créancier</div>
+            <div class="value" th:text="${transaction.creditorIban}"></div>
+        </div>
+        <div class="field">
+            <div class="label">BIC</div>
+            <div class="value" th:text="${transaction.creditorBic}"></div>
+        </div>
+        <div class="field">
+            <div class="label">Motif</div>
+            <div class="value" th:text="${transaction.remittanceInfo}"></div>
+        </div>
+    </div>
+</body>
+</html>

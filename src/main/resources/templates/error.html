@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Erreur</title>
+	<link rel="stylesheet" th:href="@{/css/ErrorStyle.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="error-code" th:text="${status}">500</div>
+        <div class="error-title" th:text="${error}">Erreur</div>
+        <div class="error-path" th:text="${path}">/chemin</div>
+        <div class="error-message" th:text="${message}">Message d'erreur</div>
+        <p class="error-time">Date : <span th:text="${timestamp}">Timestamp</span></p>
+        <a href="/" class="btn">Retour à l'accueil</a>
+    </div>
+</body>
+</html>

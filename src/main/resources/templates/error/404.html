@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Introuvable</title>
+    <link th:href="@{/css/ErrorStyle.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="error-code">404</div>
+        <div class="error-title">Page introuvable</div>
+        <div class="error-path">Le chemin <span th:text="${path}">/chemin</span> n'existe pas.</div>
+        <div class="error-message">Le lien que vous avez suivi est cassé ou l'URL est incorrecte.</div>
+        
+        <p class="error-time">Date de la requête : <span th:text="${timestamp}">Timestamp</span></p>
+
+        <a href="/" class="btn">Retour à l'accueil</a>
+    </div>
+</body>
+</html>

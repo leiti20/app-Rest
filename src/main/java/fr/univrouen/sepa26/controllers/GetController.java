@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import fr.univrouen.sepa26.model.*;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class GetController {
@@ -37,23 +38,35 @@ public class GetController {
 	@GetMapping(value = "/sepa26", produces = MediaType.APPLICATION_XML_VALUE)
 	public @ResponseBody CstmrDrctDbtInitn getSepa26() {
 
-	    // Transactions
 	    DirectDebitTransactionInfo tx1 = new DirectDebitTransactionInfo(
-	        "REF OPE AAAA", 1100.07, "Mr Debiteur N1", "Facture N1");
-	    DirectDebitTransactionInfo tx2 = new DirectDebitTransactionInfo(
-	        "REF OPE BBBB", 2150.08, "Mr Debiteur N2", "Facture N2");
+	        "REF OPE AAAA", 1100.07,
+	        "MANDAT NO 55555", "2009-09-01",
+	        "BANKFRPP", "Mr Debiteur N1",
+	        "FR763004136210001234567811", "Facture N1");
 
-	    // Lot
+	    DirectDebitTransactionInfo tx2 = new DirectDebitTransactionInfo(
+	        "REF OPE BBBB", 2150.08,
+	        "MANDAT NO 666666", "1989-07-03",
+	        "BANKGBUL", "Mr Debiteur N2",
+	        "GB29NWBK60161331926819", "Facture N2");
+
+	    List<DirectDebitTransactionInfo> txList = new ArrayList<>();
+	    txList.add(tx1);
+	    txList.add(tx2);
+
 	    PaymentInformation pmt = new PaymentInformation(
 	        "REF Remise 123", 2, 3250.15,
 	        "2009-09-10", "Societe XX",
-	        Arrays.asList(tx1, tx2));
+	        "FR7610041010050500013M02606", "BANKFRPP",
+	        txList);
 
-	    // Header
 	    GroupHeader grpHdr = new GroupHeader(
 	        "MSGID-123456", "2009-09-04T14:25:00",
 	        2, 3250.15, "Societe XX");
 
-	    return new CstmrDrctDbtInitn(grpHdr, Arrays.asList(pmt));
+	    List<PaymentInformation> pmtList = new ArrayList<>();
+	    pmtList.add(pmt);
+
+	    return new CstmrDrctDbtInitn(grpHdr, pmtList);
 	}
 }

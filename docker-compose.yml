@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: sepa26-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=sepa26db
+    volumes:
+      - mongo-data:/data/db
+
+  sepa26:
+    build: .
+    image: sepa26-server
+    container_name: servicesepa26
+    ports:
+      - "8100:8100"
+    depends_on:
+      - mongodb
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/sepa26db
+      - SPRING_MONGODB_URI=mongodb://mongodb:27017/sepa26db
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_DATA_MONGODB_DATABASE=sepa26db
+
+volumes:
+  mongo-data:
