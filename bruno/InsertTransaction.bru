@@ -1,0 +1,51 @@
+meta {
+  name: InsertTransaction
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://10.130.162.184:8100/sepa26/insert
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: application/xml
+}
+
+body:xml {
+  <?xml version="1.0" encoding="UTF-8"?>
+  <Document xmlns="http://univ.fr/sepa">
+      <CstmrDrctDbtInitn>
+          <GrpHdr>
+              <MsgId>MSGID-BRUNO-001</MsgId>
+              <CreDtTm>2026-04-06T13:40:00</CreDtTm>
+              <NbOfTxs>1</NbOfTxs>
+              <CtrlSum>1100.07</CtrlSum>
+              <InitgPty><Nm>Societe XX</Nm></InitgPty>
+          </GrpHdr>
+          <PmtInf>
+              <PmtInfId>REF-BRUNO-A</PmtInfId>
+              <PmtTpInf>
+                  <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                  <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                  <SeqTp>OOFF</SeqTp>
+              </PmtTpInf>
+              <ReqdColltnDt>2026-04-10</ReqdColltnDt>
+              <Cdtr><Nm>Societe XX</Nm></Cdtr>
+              <CdtrAcct><Id><IBAN>FR7610041010050500013M02606</IBAN></Id></CdtrAcct>
+              <CdtrAgt><FinInstnId><BIC>BANKFRPP</BIC></FinInstnId></CdtrAgt>
+              <DrctDbtTxInf>
+                  <PmtId>TX-BRUNO-001</PmtId>
+                  <InstdAmt Ccy="EUR">1100.07</InstdAmt>
+                  <DrctDbtTx><MndtRltdInf><MndtId>MANDAT-A</MndtId><DtOfSgntr>2026-01-01</DtOfSgntr></MndtRltdInf></DrctDbtTx>
+                  <DbtrAgt><FinInstnId><BIC>BANKFRPP</BIC></FinInstnId></DbtrAgt>
+                  <Dbtr><Nm>Jean Dupont</Nm></Dbtr>
+                  <DbtrAcct><Id><IBAN>FR7630041362100012345678144</IBAN></Id></DbtrAcct>
+                  <RmtInf>Facture Bruno N1</RmtInf>
+              </DrctDbtTxInf>
+          </PmtInf>
+      </CstmrDrctDbtInitn>
+  </Document>
+}

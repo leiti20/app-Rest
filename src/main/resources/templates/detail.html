@@ -19,7 +19,7 @@
         </div>
         <div class="field">
             <div class="label">Date</div>
-            <div class="value" th:text="${transaction.createdAt}"></div>
+            <div class="value" th:text="${transaction.createdAt.contains('T') ? transaction.createdAt.substring(0, 16).replace('T', ' ') : transaction.createdAt}"></div>
         </div>
         <div class="field">
             <div class="label">Montant</div>

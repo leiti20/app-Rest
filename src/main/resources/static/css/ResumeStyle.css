@@ -100,3 +100,31 @@ td a:hover {
     font-size: 16px;
     font-weight: 500;
 }
+
+.amount-cell {
+    text-align: right;
+}
+
+.amount-badge {
+    background: #e7f5ff;
+    color: #228be6;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.date-cell {
+    color: #495057;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+th {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 13px;
+}

@@ -19,9 +19,9 @@
         </tr>
         <tr th:each="t : ${transactions}">
             <td><a th:href="@{'/sepa26/html/' + ${t.id}}" th:text="${t.id}"></a></td>
-            <td th:text="${t.createdAt}"></td>
+            <td class="date-cell" th:text="${t.createdAt.contains('T') ? t.createdAt.substring(0, 16).replace('T', ' ') : t.createdAt}"></td>
             <td th:text="${t.pmtId}"></td>
-            <td th:text="${t.amount} + ' ' + ${t.currency}"></td>
+            <td class="amount-cell"><span class="amount-badge" th:text="${#numbers.formatDecimal(t.amount, 1, 2)} + ' ' + ${t.currency}"></span></td>
         </tr>
     </table>
     <p class="empty" th:if="${transactions.isEmpty()}">Aucune transaction enregistrée.</p>

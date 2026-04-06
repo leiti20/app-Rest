@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "8b9e3d81-da15-412e-99f5-4c6e9d6d1b82",
+		"name": "sepa26_leiti",
+		"description": "Collection complète pour tester le service SEPA26 (Lab IV.5). \n\n### Points clés :\n- Utilisation de la variable {{baseUrl}} pour le serveur.\n- Extraction complète des 9 champs SEPA.\n- Formattage de date (YYYY-MM-DD HH:mm).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insert Transaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Document xmlns=\"http://univ.fr/sepa\">\n    <CstmrDrctDbtInitn>\n        <GrpHdr>\n            <MsgId>MSGID-POSTMAN-001</MsgId>\n            <CreDtTm>2026-04-06T13:40:00</CreDtTm>\n            <NbOfTxs>1</NbOfTxs>\n            <CtrlSum>1100.07</CtrlSum>\n            <InitgPty><Nm>Postman Testing</Nm></InitgPty>\n        </GrpHdr>\n        <PmtInf>\n            <PmtInfId>REF-POSTMAN-SAMPLE</PmtInfId>\n            <PmtTpInf><SvcLvl><Cd>SEPA</Cd></SvcLvl><LclInstrm><Cd>CORE</Cd></LclInstrm><SeqTp>OOFF</SeqTp></PmtTpInf>\n            <ReqdColltnDt>2026-04-10</ReqdColltnDt>\n            <Cdtr><Nm>Postman S.A.</Nm></Cdtr>\n            <CdtrAcct><Id><IBAN>FR7612345678901234567890XXX</IBAN></Id></CdtrAcct>\n            <CdtrAgt><FinInstnId><BIC>POSTFRPP</BIC></FinInstnId></CdtrAgt>\n            <DrctDbtTxInf>\n                <PmtId>TX-POSTMAN-001</PmtId>\n                <InstdAmt Ccy=\"EUR\">1100.07</InstdAmt>\n                <DrctDbtTx><MndtRltdInf><MndtId>MANDAT-P01</MndtId><DtOfSgntr>2026-04-01</DtOfSgntr></MndtRltdInf></DrctDbtTx>\n                <DbtrAgt><FinInstnId><BIC>CHASEFRR</BIC></FinInstnId></DbtrAgt>\n                <Dbtr><Nm>Leiti User</Nm></Dbtr>\n                <DbtrAcct><Id><IBAN>FR7630041362100012345678999</IBAN></Id></DbtrAcct>\n                <RmtInf>Achat Licence Postman</RmtInf>\n            </DrctDbtTxInf>\n        </PmtInf>\n    </CstmrDrctDbtInitn>\n</Document>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/sepa26/insert",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"sepa26",
+						"insert"
+					]
+				},
+				"description": "Insère une nouvelle transaction SEPA. Le corps XML contient tous les champs requis par le schéma XSD."
+			},
+			"response": []
+		},
+		{
+			"name": "List Transactions (XML)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/sepa26/resume/xml",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"sepa26",
+						"resume",
+						"xml"
+					]
+				},
+				"description": "Récupère les 10 dernières transactions au format XML."
+			},
+			"response": []
+		},
+		{
+			"name": "Detail Transaction (XML)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/sepa26/xml/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"sepa26",
+						"xml",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "69d3a8bb69ba85b1c4db274d",
+							"description": "ID unique de la transaction à récupérer"
+						}
+					]
+				},
+				"description": "Affiche le détail complet d'une transaction spécifique par son ID."
+			},
+			"response": []
+		},
+		{
+			"name": "Search Transactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/sepa26/search?date=2026-04-01&sum=100.0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"sepa26",
+						"search"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2026-04-01",
+							"description": "Date de début (YYYY-MM-DD)"
+						},
+						{
+							"key": "sum",
+							"value": "100.0",
+							"description": "Montant minimum"
+						}
+					]
+				},
+				"description": "Recherche des transactions filtrées par date minimum et montant minimum."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Transaction",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/sepa26/delete/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"sepa26",
+						"delete",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "VOTREID_ICI",
+							"description": "ID de la transaction à supprimer"
+						}
+					]
+				},
+				"description": "Supprime une transaction de la base de données."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://10.130.162.184:8100",
+			"type": "string"
+		}
+	]
+}

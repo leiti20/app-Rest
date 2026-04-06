@@ -144,14 +144,26 @@ public class Sepa26Controller {
         }
 
         // Sauvegarder
-        SepaTransaction t = new SepaTransaction();
-        t = new SepaTransaction(
+        String dbtr = extractTag(xmlFlux, "Dbtr");
+        String dbtrAcct = extractTag(xmlFlux, "DbtrAcct");
+        String cdtr = extractTag(xmlFlux, "Cdtr");
+        String cdtrAcct = extractTag(xmlFlux, "CdtrAcct");
+        String cdtrAgt = extractTag(xmlFlux, "CdtrAgt");
+
+        String amountStr = extractTag(xmlFlux, "CtrlSum");
+        if (amountStr == null) amountStr = extractTag(xmlFlux, "InstdAmt");
+
+        SepaTransaction t = new SepaTransaction(
             pmtId,
-            Double.parseDouble(extractTag(xmlFlux, "CtrlSum") != null ? extractTag(xmlFlux, "CtrlSum") : "0"),
+            Double.parseDouble(amountStr != null ? amountStr : "0"),
             "EUR",
-            extractTag(xmlFlux, "Nm"),
-            "", "", "", "", "",
-            java.time.LocalDateTime.now().toString()
+            extractTag(dbtr, "Nm"),
+            extractTag(dbtrAcct, "IBAN"),
+            extractTag(cdtr, "Nm"),
+            extractTag(cdtrAcct, "IBAN"),
+            extractTag(cdtrAgt, "BIC"),
+            extractTag(xmlFlux, "RmtInf"),
+            java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         );
         SepaTransaction saved = repository.save(t);
 
@@ -161,12 +173,20 @@ public class Sepa26Controller {
 
     // Utilitaire pour extraire une balise XML
     private String extractTag(String xml, String tag) {
-        String open = "<" + tag + ">";
+        if (xml == null || tag == null) return null;
+        String open = "<" + tag; // Peut avoir des attributs : <Tag Ccy="EUR">
+        int startPos = xml.indexOf(open);
+        if (startPos == -1) return null;
+        
+        // Trouver la fin de la balise ouvrante
+        int startContent = xml.indexOf(">", startPos);
+        if (startContent == -1) return null;
+        
         String close = "</" + tag + ">";
-        int start = xml.indexOf(open);
-        int end = xml.indexOf(close);
-        if (start == -1 || end == -1) return null;
-        return xml.substring(start + open.length(), end).trim();
+        int endContent = xml.indexOf(close, startContent);
+        if (endContent == -1) return null;
+        
+        return xml.substring(startContent + 1, endContent).trim();
     }
     
  // ─── GET /sepa26/search
