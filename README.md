@@ -124,7 +124,7 @@ Pour faciliter les tests des différentes requêtes (notamment les POST nécessi
 
 1. Installe le client API **Bruno** ([https://www.usebruno.com](https://www.usebruno.com)).
 2. Ouvre Bruno et clique sur **"Open Collection"**.
-3. Sélectionne le dossier `bruno/` situé à la racine de ce projet.
+3. Sélectionne le fichier `sepa26_leiti.postman_collection.json` situé à la racine de ce projet.
 4. Tu y trouveras toutes les requêtes préconfigurées avec les bons headers et payloads d'exemple.
 
 ---
