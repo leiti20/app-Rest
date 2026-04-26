@@ -75,6 +75,27 @@ td a:hover {
     color: #ffffff;
 }
 
+.ref-link {
+    background: none !important;
+    padding: 0 !important;
+    color: #495057 !important;
+    font-weight: 500 !important;
+    text-decoration: underline !important;
+}
+
+.ref-link:hover {
+    color: #228be6 !important;
+    background: none !important;
+}
+
+tr {
+    transition: background 0.2s;
+}
+
+tr:hover {
+    cursor: pointer;
+}
+
 .back { 
     display: inline-block; 
     color: #495057; 

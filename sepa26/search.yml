@@ -5,11 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:8100/sepa26/search?sum=500
-  params:
-    - name: sum
-      value: "500"
-      type: query
+  url: http://10.130.162.184:8100/sepa26/resume/xml
   body:
     type: xml
     data: ""

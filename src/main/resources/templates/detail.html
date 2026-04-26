@@ -49,6 +49,14 @@
             <div class="label">Motif</div>
             <div class="value" th:text="${transaction.remittanceInfo}"></div>
         </div>
+        
+        <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: center;">
+            <a th:href="@{'/sepa26/edit/' + ${transaction.id}}" 
+               style="padding: 10px 20px; background: #007bff; color: white; border-radius: 4px; text-decoration: none; font-weight: 600;">Modifier</a>
+            <a th:href="@{'/sepa26/delete-html/' + ${transaction.id}}" 
+               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette transaction ?')"
+               style="padding: 10px 20px; background: #dc3545; color: white; border-radius: 4px; text-decoration: none; font-weight: 600;">Supprimer</a>
+        </div>
     </div>
 </body>
 </html>

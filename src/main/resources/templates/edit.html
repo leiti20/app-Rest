@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Modifier transaction</title>
+    <link rel="stylesheet" th:href="@{/css/FormStyle.css}">
+</head>
+<body>
+    <div class="form-container">
+        <a class="back" th:href="@{'/sepa26/html/' + ${transaction.id}}">← Retour au détail</a>
+        <h1>Modifier la transaction</h1>
+
+        <form th:action="@{'/sepa26/update/' + ${transaction.id}}" th:object="${transaction}" method="post">
+            <div class="form-group">
+                <label for="pmtId">Référence (PmtId) :</label>
+                <input type="text" id="pmtId" th:field="*{pmtId}" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Montant :</label>
+                <input type="number" step="0.01" id="amount" th:field="*{amount}" required>
+            </div>
+            <div class="form-group">
+                <label for="currency">Devise :</label>
+                <input type="text" id="currency" th:field="*{currency}" required>
+            </div>
+            <div class="form-group">
+                <label for="debtorName">Nom Débiteur :</label>
+                <input type="text" id="debtorName" th:field="*{debtorName}" required>
+            </div>
+            <div class="form-group">
+                <label for="debtorIban">IBAN Débiteur :</label>
+                <input type="text" id="debtorIban" th:field="*{debtorIban}" required>
+            </div>
+            <div class="form-group">
+                <label for="creditorName">Nom Créancier :</label>
+                <input type="text" id="creditorName" th:field="*{creditorName}" required>
+            </div>
+            <div class="form-group">
+                <label for="creditorIban">IBAN Créancier :</label>
+                <input type="text" id="creditorIban" th:field="*{creditorIban}" required>
+            </div>
+            <div class="form-group">
+                <label for="creditorBic">BIC Créancier :</label>
+                <input type="text" id="creditorBic" th:field="*{creditorBic}" required>
+            </div>
+            <div class="form-group">
+                <label for="remittanceInfo">Motif (RemittanceInfo) :</label>
+                <textarea id="remittanceInfo" th:field="*{remittanceInfo}" rows="3" required></textarea>
+            </div>
+            
+            <!-- On garde la date de création telle quelle ou on permet de la modifier -->
+            <input type="hidden" th:field="*{createdAt}">
+
+            <button type="submit" class="btn-submit">Enregistrer les modifications</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Importer un flux</title>
+    <link rel="stylesheet" th:href="@{/css/FormStyle.css}">
+</head>
+<body>
+    <div class="form-container">
+        <a class="back" href="/">← Accueil</a>
+        <h1>Importer un flux SEPA XML</h1>
+
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <form th:action="@{/sepa26/upload}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Sélectionnez le fichier XML (.xml) :</label>
+                <input type="file" id="file" name="file" accept=".xml" required>
+            </div>
+            <button type="submit" class="btn-submit">Transférer vers le serveur</button>
+        </form>
+    </div>
+</body>
+</html>

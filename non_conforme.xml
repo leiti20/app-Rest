@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://univ.fr/sepa">
+    <CstmrDrctDbtInitn>
+        <GrpHdr>
+            <!-- ERREUR : MsgId manquant (champ obligatoire) -->
+            <CreDtTm>2026-04-26T14:15:00</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>50.00</CtrlSum>
+            <InitgPty><Nm>Societe Erreur</Nm></InitgPty>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>PMTID-ERREUR</PmtInfId>
+            <PmtTpInf>
+                <SvcLvl><Cd>NON-SEPA</Cd></SvcLvl> <!-- ERREUR : Valeur fixed="SEPA" attendue -->
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>OOFF</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2026-05-01</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Crediteur</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>INVALID-IBAN-FORMAT</IBAN></Id> <!-- ERREUR : Pattern IBAN non respecte -->
+            </CdtrAcct>
+            <CdtrAgt>
+                <FinInstnId><BIC>BIC123</BIC></FinInstnId> <!-- ERREUR : Pattern BIC non respecte -->
+            </CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId>TXID-ERR</PmtId>
+                <InstdAmt Ccy="EUR">50.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf>
+                        <MndtId>MANDAT-ERR</MndtId>
+                        <DtOfSgntr>2026-04-01</DtOfSgntr>
+                    </MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt>
+                    <FinInstnId><BIC>SOGEFRRP</BIC></FinInstnId>
+                </DbtrAgt>
+                <Dbtr>
+                    <Nm>Debitrice</Nm>
+                </Dbtr>
+                <DbtrAcct>
+                    <Id><IBAN>FR7698765432109876543210987</IBAN></Id>
+                </DbtrAcct>
+            </DrctDbtTxInf>
+        </PmtInf>
+    </CstmrDrctDbtInitn>
+</Document>

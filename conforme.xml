@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://univ.fr/sepa">
+    <CstmrDrctDbtInitn>
+        <GrpHdr>
+            <MsgId>MSGID-FINAL-2026</MsgId>
+            <CreDtTm>2026-04-26T14:30:00</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>1500.00</CtrlSum>
+            <InitgPty><Nm>Societe Rouen GIL</Nm></InitgPty>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>PMTID-VALID-TEST</PmtInfId>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>OOFF</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2026-05-15</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Fournisseur Cloud</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id><IBAN>FR7612345678901234567890XXX</IBAN></Id>
+            </CdtrAcct>
+            <CdtrAgt>
+                <FinInstnId><BIC>BNPAPRRP</BIC></FinInstnId>
+            </CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId>TX-VALID-001</PmtId>
+                <InstdAmt Ccy="EUR">1500.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf>
+                        <MndtId>MANDAT-2026-A1</MndtId>
+                        <DtOfSgntr>2026-04-10</DtOfSgntr>
+                    </MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt>
+                    <FinInstnId><BIC>SOGEFRRP</BIC></FinInstnId>
+                </DbtrAgt>
+                <Dbtr>
+                    <Nm>Leiticia Client</Nm>
+                </Dbtr>
+                <DbtrAcct>
+                    <Id><IBAN>FR7698765432109876543210999</IBAN></Id>
+                </DbtrAcct>
+                <RmtInf>Reglement Facture Mai 2026</RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+    </CstmrDrctDbtInitn>
+</Document>

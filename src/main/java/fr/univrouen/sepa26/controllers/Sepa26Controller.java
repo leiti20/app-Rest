@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import fr.univrouen.sepa26.service.XSDValidator;
 
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class Sepa26Controller {
@@ -132,7 +135,7 @@ public class Sepa26Controller {
         if (error != null) {
             return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                    "<response><status>ERROR</status>" +
-                   "<description>" + error + "</description></response>";
+                   "<description>" + simplifyError(error) + "</description></response>";
         }
 
         // Vérifier doublon sur PmtId
@@ -168,7 +171,63 @@ public class Sepa26Controller {
         SepaTransaction saved = repository.save(t);
 
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-               "<response><id>" + saved.getId() + "</id><status>INSERTED</status></response>";
+               "<response><id> " + saved.getId() + " </id><status>INSERTED</status></response>";
+    }
+
+    // ─── NOUVEAU : Gestion Web (Upload / Edit / Delete) ───
+
+    @GetMapping("/sepa26/upload")
+    public String uploadPage() {
+        return "upload";
+    }
+
+    @PostMapping("/sepa26/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model) {
+        try {
+            if (file.isEmpty()) {
+                model.addAttribute("error", "Fichier vide !");
+                return "upload";
+            }
+            String xmlFlux = new String(file.getBytes(), StandardCharsets.UTF_8);
+            
+            // On réutilise la logique d'insertion existante
+            String response = insert(xmlFlux); 
+            if (response.contains("<status>ERROR</status>")) {
+                String errorMsg = extractTag(response, "description");
+                model.addAttribute("error", errorMsg != null ? errorMsg : "Erreur lors de l'insertion.");
+                return "upload";
+            }
+            
+            model.addAttribute("message", "Fichier importé avec succès !");
+            return "upload";
+            
+        } catch (Exception e) {
+            model.addAttribute("error", "Erreur serveur : " + e.getMessage());
+            return "upload";
+        }
+    }
+
+    @GetMapping("/sepa26/edit/{id}")
+    public String editPage(@PathVariable String id, Model model) {
+        Optional<SepaTransaction> t = repository.findById(id);
+        if (t.isPresent()) {
+            model.addAttribute("transaction", t.get());
+            return "edit";
+        }
+        return "redirect:/sepa/resume/html";
+    }
+
+    @PostMapping("/sepa26/update/{id}")
+    public String updateTransaction(@PathVariable String id, @ModelAttribute SepaTransaction transaction) {
+        transaction.setId(id);
+        repository.save(transaction);
+        return "redirect:/sepa26/html/" + id;
+    }
+
+    @GetMapping("/sepa26/delete-html/{id}")
+    public String deleteHtml(@PathVariable String id) {
+        repository.deleteById(id);
+        return "redirect:/sepa/resume/html";
     }
 
     // Utilitaire pour extraire une balise XML
@@ -227,5 +286,37 @@ public class Sepa26Controller {
         } catch (Exception e) {
             return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><status>ERROR</status></response>";
         }
+    }
+
+    private String simplifyError(String error) {
+        if (error == null) return null;
+        
+        // Champs manquants
+        if (error.contains("cvc-complex-type.2.4.a") || error.contains("cvc-complex-type.2.4.b")) {
+            if (error.contains("MsgId")) return "Le champ 'MsgId' (identifiant du message) est manquant.";
+            if (error.contains("CreDtTm")) return "La date de création du flux 'CreDtTm' est manquante ou mal placée.";
+            if (error.contains("NbOfTxs")) return "Le nombre de transactions 'NbOfTxs' est manquant.";
+            if (error.contains("CtrlSum")) return "Le montant total 'CtrlSum' est manquant.";
+            if (error.contains("PmtInfId")) return "L'identifiant de paiement 'PmtInfId' est manquant.";
+            if (error.contains("InstdAmt")) return "Le montant de la transaction 'InstdAmt' est manquant.";
+            return "Structure XML invalide : un élément obligatoire est manquant ou mal ordonné.";
+        }
+        
+        // Valeur fixe invalide (ex: SEPA)
+        if (error.contains("cvc-type.3.1.3") && error.contains("fixed")) {
+            return "Une valeur spécifique (ex: 'SEPA') n'est pas respectée ou est mal orthographiée.";
+        }
+        
+        // Format invalide (IBAN, BIC, etc)
+        if (error.contains("cvc-datatype-valid.1.2.1") || error.contains("cvc-pattern-valid")) {
+            if (error.contains("IBANType")) return "Le format de l'IBAN est invalide.";
+            if (error.contains("BICType")) return "Le code BIC (identifiant banque) est invalide.";
+            if (error.contains("dateTime")) return "Le format de la date et heure est invalide (attendu: YYYY-MM-DDTHH:MM:SS).";
+            if (error.contains("date")) return "Le format de la date est invalide (attendu: YYYY-MM-DD).";
+            return "Le format d'un des champs (IBAN, BIC, date) est incorrect.";
+        }
+
+        // Nettoyage générique
+        return error.replace("{\"http://univ.fr/sepa\":", "'").replace("}", "'");
     }
 }
