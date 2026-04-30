@@ -181,6 +181,11 @@ public class Sepa26Controller {
         return "upload";
     }
 
+    @GetMapping("/sepa26/transfer")
+    public String transferToolPage() {
+        return "transfer-tool";
+    }
+
     @PostMapping("/sepa26/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model) {
         try {

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SEPA26 - Outil de Transfert</title>
+    <link rel="stylesheet" th:href="@{/css/FormStyle.css}">
+    <style>
+        .config-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+        .config-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .config-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        #result-container {
+            margin-top: 30px;
+            display: none;
+        }
+        .response-box {
+            background: #212529;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container" style="max-width: 700px;">
+        <a class="back" href="/">← Accueil</a>
+        <h1>Outil de Transfert SEPA26</h1>
+
+        <!-- Configuration de la connexion -->
+        <div class="config-section">
+            <h3 style="margin-bottom: 15px; font-size: 16px;">Paramètres de connexion</h3>
+            <div class="config-row">
+                <div class="form-group">
+                    <label for="server-url">URL du Serveur :</label>
+                    <input type="text" id="server-url" placeholder="ex: http://localhost" value="http://localhost">
+                </div>
+                <div class="form-group" style="flex: 0 0 100px;">
+                    <label for="server-port">Port :</label>
+                    <input type="text" id="server-port" placeholder="8080" value="8080">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="api-endpoint">Endpoint REST (fixe) :</label>
+                <input type="text" id="api-endpoint" value="/sepa26/insert" readonly disabled style="background: #e9ecef; cursor: not-allowed;">
+            </div>
+        </div>
+
+        <!-- Sélection du fichier -->
+        <div class="form-group">
+            <label for="file">Flux SEPA26 (XML) :</label>
+            <input type="file" id="file" accept=".xml">
+        </div>
+
+        <button type="button" id="btn-transfer" class="btn-submit">Lancer le transfert</button>
+
+        <div class="loader" id="loader">Envoi en cours...</div>
+
+        <!-- Résultats -->
+        <div id="result-container">
+            <h3 style="margin-bottom: 10px; font-size: 16px;">Réponse du serveur :</h3>
+            <div id="status-badge" class="alert"></div>
+            <div class="response-box" id="response-content"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btn-transfer').addEventListener('click', async () => {
+            const url = document.getElementById('server-url').value;
+            const port = document.getElementById('server-port').value;
+            const endpoint = document.getElementById('api-endpoint').value;
+            const fileInput = document.getElementById('file');
+            
+            if (fileInput.files.length === 0) {
+                alert('Veuillez sélectionner un fichier XML.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async (e) => {
+                const xmlContent = e.target.result;
+                const fullUrl = `${url}:${port}${endpoint}`;
+                
+                document.getElementById('loader').style.display = 'block';
+                document.getElementById('result-container').style.display = 'none';
+
+                try {
+                    const response = await fetch(fullUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/xml',
+                            'Accept': 'application/xml'
+                        },
+                        body: xmlContent
+                    });
+
+                    const responseText = await response.text();
+                    displayResult(response.ok, responseText);
+                } catch (error) {
+                    displayResult(false, `Erreur de connexion : ${error.message}\nAssurez-vous que le serveur est accessible et que le CORS est autorisé.`);
+                } finally {
+                    document.getElementById('loader').style.display = 'none';
+                }
+            };
+
+            reader.readAsText(file);
+        });
+
+        function displayResult(success, content) {
+            const container = document.getElementById('result-container');
+            const badge = document.getElementById('status-badge');
+            const box = document.getElementById('response-content');
+
+            container.style.display = 'block';
+            box.textContent = content;
+
+            if (success && !content.includes('<status>ERROR</status>')) {
+                badge.className = 'alert alert-success';
+                badge.textContent = 'Transfert réussi !';
+            } else {
+                badge.className = 'alert alert-error';
+                badge.textContent = 'Échec du transfert.';
+            }
+        }
+        
+        // Initialisation automatique de l'URL si on est sur le serveur
+        window.onload = () => {
+             const currentUrl = window.location.protocol + "//" + window.location.hostname;
+             const currentPort = window.location.port || (window.location.protocol === 'https:' ? '443' : '80');
+             document.getElementById('server-url').value = currentUrl;
+             document.getElementById('server-port').value = currentPort;
+        };
+    </script>
+</body>
+</html>

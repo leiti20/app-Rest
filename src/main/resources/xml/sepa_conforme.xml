@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://univ.fr/sepa"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://univ.fr/sepa sepa26.tp1.xsd">
+    <CstmrDrctDbtInitn>
+        <GrpHdr>
+            <MsgId>MSG-2026-001</MsgId>
+            <CreDtTm>2026-04-27T10:00:00</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>1250.50</CtrlSum>
+            <InitgPty>
+                <Nm>ENTREPRISE ALPHA</Nm>
+            </InitgPty>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>PMT-001</PmtInfId>
+            <PmtTpInf>
+                <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+                <LclInstrm><Cd>CORE</Cd></LclInstrm>
+                <SeqTp>FRST</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2026-05-15</ReqdColltnDt>
+            <Cdtr>
+                <Nm>ENTREPRISE ALPHA</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id>
+                    <IBAN>FR7630006000010123456789012</IBAN>
+                </Id>
+            </CdtrAcct>
+            <CdtrAgt>
+                <FinInstnId>
+                    <BIC>BNPAFRPPXXX</BIC>
+                </FinInstnId>
+            </CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId>TX-001</PmtId>
+                <InstdAmt Ccy="EUR">1250.50</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf>
+                        <MndtId>MANDAT-001</MndtId>
+                        <DtOfSgntr>2026-01-01</DtOfSgntr>
+                    </MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt>
+                    <FinInstnId>
+                        <BIC>SOGEFRPPXXX</BIC>
+                    </FinInstnId>
+                </DbtrAgt>
+                <Dbtr>
+                    <Nm>JEAN DUPONT</Nm>
+                </Dbtr>
+                <DbtrAcct>
+                    <Id>
+                        <IBAN>FR7612345678901234567890123</IBAN>
+                    </Id>
+                </DbtrAcct>
+                <RmtInf>PAIEMENT FACTURE 123</RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+    </CstmrDrctDbtInitn>
+</Document>
